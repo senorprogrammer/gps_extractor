@@ -25,7 +25,6 @@ func (base *Base) Export(images []*filetypes.Image, outputFilePath string) error
 	case ".htm", ".html":
 		return ToHTML(images, outputFilePath)
 	default:
-		// return fmt.Errorf("export file type undefined or unknown: %s", extn)
-		return ToString(images)
+		return ToTable(images)
 	}
 }

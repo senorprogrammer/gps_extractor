@@ -8,9 +8,8 @@ import (
 	"github.com/senorprogrammer/gps-extractor/filetypes"
 )
 
-// ToString writes the file data out to the console as a string
-func ToString(images []*filetypes.Image) error {
-	// Define the file headers
+// ToTable writes the file data out to the console as a string
+func ToTable(images []*filetypes.Image) error {
 	data := [][]string{}
 
 	for _, image := range images {

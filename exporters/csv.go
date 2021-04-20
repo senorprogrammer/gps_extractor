@@ -10,7 +10,6 @@ import (
 
 // ToCSV exports data in CSV format
 func ToCSV(images []*filetypes.Image, outputFilePath string) error {
-	// Define the file headers
 	data := [][]string{{"file", "latitude", "longitude"}}
 
 	for _, image := range images {
