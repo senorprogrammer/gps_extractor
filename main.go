@@ -8,15 +8,15 @@ import (
 	"github.com/senorprogrammer/gps-extractor/exporters"
 )
 
-const (
-	csvFilePath = "images.csv"
-)
-
 var (
-	targetDirFlag string
+	outputFileFlag string
+	targetDirFlag  string
 )
 
 func init() {
+	flag.StringVar(&outputFileFlag, "o", "", "specifies the output file, with extension: csv, html (short-hand)")
+	flag.StringVar(&outputFileFlag, "output", "", "specifies the output file, with extension: csv, html")
+
 	flag.StringVar(&targetDirFlag, "t", "", "specifies the target directory key (short-hand)")
 	flag.StringVar(&targetDirFlag, "target", "", "specifies the target directory key")
 }
@@ -29,7 +29,7 @@ func run() {
 		log.Fatal(err)
 	}
 
-	err = exporters.ToCSV(images, csvFilePath)
+	err = exporters.ToCSV(images, outputFileFlag)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -39,7 +39,9 @@ func run() {
 
 func main() {
 	flag.Parse()
-	requireFlags(targetDirFlag)
+
+	requiredFlags(targetDirFlag)
+	defaultFlags()
 
 	run()
 
@@ -47,7 +49,18 @@ func main() {
 	os.Exit(0)
 }
 
-func requireFlags(targetDirFlag string) {
+/* -------------------- Unexported Functions -------------------- */
+
+// defaultFlags set default values for any optional flags that don't already
+// have a value set
+func defaultFlags() {
+	if outputFileFlag == "" {
+		outputFileFlag = "image_data.csv"
+	}
+}
+
+// requiredFlags raise an error if the flag is not set
+func requiredFlags(targetDirFlag string) {
 	if targetDirFlag == "" {
 		log.Fatal("'target' is required")
 	}

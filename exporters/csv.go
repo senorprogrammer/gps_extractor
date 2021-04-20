@@ -11,7 +11,7 @@ import (
 
 // ToCSV exports data in CSV format
 func ToCSV(images []*filetypes.Image, outputFilePath string) error {
-	log.Println("> exporting to csv")
+	log.Printf("> exporting to csv: %s\n", outputFilePath)
 
 	// Define the file headers
 	data := [][]string{{"file", "latitude", "longitude"}}
