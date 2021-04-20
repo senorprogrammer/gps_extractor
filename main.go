@@ -29,7 +29,8 @@ func run() {
 		log.Fatal(err)
 	}
 
-	err = exporters.ToCSV(images, outputFileFlag)
+	expBase := exporters.NewBase()
+	err = expBase.Export(images, outputFileFlag)
 	if err != nil {
 		log.Fatal(err)
 	}
