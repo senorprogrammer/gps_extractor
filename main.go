@@ -42,23 +42,13 @@ func main() {
 	flag.Parse()
 
 	requiredFlags(targetDirFlag)
-	defaultFlags()
 
 	run()
 
-	log.Printf("done")
 	os.Exit(0)
 }
 
 /* -------------------- Unexported Functions -------------------- */
-
-// defaultFlags set default values for any optional flags that don't already
-// have a value set
-func defaultFlags() {
-	if outputFileFlag == "" {
-		outputFileFlag = "image_data.csv"
-	}
-}
 
 // requiredFlags raise an error if the flag is not set
 func requiredFlags(targetDirFlag string) {

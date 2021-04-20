@@ -1,17 +1,17 @@
 package exporters
 
 import (
-	"encoding/csv"
 	"os"
 	"strconv"
 
+	"github.com/olekukonko/tablewriter"
 	"github.com/senorprogrammer/gps-extractor/filetypes"
 )
 
-// ToCSV exports data in CSV format
-func ToCSV(images []*filetypes.Image, outputFilePath string) error {
+// ToString writes the file data out to the console as a string
+func ToString(images []*filetypes.Image) error {
 	// Define the file headers
-	data := [][]string{{"file", "latitude", "longitude"}}
+	data := [][]string{}
 
 	for _, image := range images {
 		lat, lon := image.LatLon()
@@ -24,18 +24,13 @@ func ToCSV(images []*filetypes.Image, outputFilePath string) error {
 		)
 	}
 
-	outFile, err := os.Create(outputFilePath)
-	if err != nil {
-		return err
-	}
-	defer outFile.Close()
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"file", "latitude", "longitude"})
 
-	w := csv.NewWriter(outFile)
-
-	err = w.WriteAll(data)
-	if err != nil {
-		return err
+	for _, v := range data {
+		table.Append(v)
 	}
+	table.Render()
 
 	return nil
 }
